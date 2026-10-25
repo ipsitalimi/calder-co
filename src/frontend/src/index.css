@@ -1,0 +1,329 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* ---------------------------------------------------------------------------
+   CALDER & CO. — editorial architecture portfolio
+   Self-hosted variable fonts (no external CDN at runtime)
+--------------------------------------------------------------------------- */
+@font-face {
+  font-family: "Fraunces";
+  src: url("/assets/fonts/Fraunces.woff2") format("woff2");
+  font-weight: 100 900;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "General Sans";
+  src: url("/assets/fonts/GeneralSans.woff2") format("woff2");
+  font-weight: 200 700;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "JetBrains Mono";
+  src: url("/assets/fonts/JetBrainsMono.woff2") format("woff2");
+  font-weight: 100 800;
+  font-style: normal;
+  font-display: swap;
+}
+
+@layer base {
+  :root {
+    /* Type families — wired to tailwind fontFamily display/body/mono */
+    --font-display: "Fraunces", "Playfair Display", Georgia, serif;
+    --font-body: "General Sans", "Inter", system-ui, sans-serif;
+    --font-mono: "JetBrains Mono", ui-monospace, monospace;
+
+    /* Architecture is rectilinear: near-zero radii */
+    --radius: 0.125rem;
+
+    /* --- Brand palette (OKLCH L C H) ---------------------------------------
+       Warm Porcelain  #F7F4ED  -> 0.965 0.012 92
+       Dark Walnut     #24140F  -> 0.235 0.028 40
+       Sandstone       #D7C5AE  -> 0.825 0.032 75
+       Obsidian Brown  #100906  -> 0.135 0.018 40
+    ----------------------------------------------------------------------- */
+
+    /* Surfaces */
+    --background: 0.965 0.012 92; /* Warm Porcelain */
+    --foreground: 0.235 0.028 40; /* Dark Walnut */
+    --card: 0.985 0.008 92; /* raised porcelain */
+    --card-foreground: 0.235 0.028 40;
+    --popover: 0.985 0.008 92;
+    --popover-foreground: 0.235 0.028 40;
+
+    /* Primary = Dark Walnut (dark sections, primary buttons) */
+    --primary: 0.235 0.028 40;
+    --primary-foreground: 0.965 0.012 92;
+
+    /* Secondary = Sandstone */
+    --secondary: 0.825 0.032 75;
+    --secondary-foreground: 0.235 0.028 40;
+
+    /* Muted = soft porcelain tint, metadata in Sandstone */
+    --muted: 0.93 0.014 90;
+    --muted-foreground: 0.52 0.028 55;
+
+    /* Accent = Obsidian Brown — small high-contrast details only */
+    --accent: 0.135 0.018 40;
+    --accent-foreground: 0.965 0.012 92;
+
+    --destructive: 0.5 0.16 28;
+    --destructive-foreground: 0.965 0.012 92;
+    --success: 0.5 0.09 150;
+    --warning: 0.68 0.13 78;
+
+    /* Hairline dividers in Sandstone */
+    --border: 0.825 0.032 75;
+    --input: 0.825 0.032 75;
+    --ring: 0.235 0.028 40;
+
+    --chart-1: 0.235 0.028 40;
+    --chart-2: 0.825 0.032 75;
+    --chart-3: 0.135 0.018 40;
+    --chart-4: 0.52 0.028 55;
+    --chart-5: 0.7 0.03 85;
+
+    --sidebar: 0.965 0.012 92;
+    --sidebar-foreground: 0.235 0.028 40;
+    --sidebar-primary: 0.235 0.028 40;
+    --sidebar-primary-foreground: 0.965 0.012 92;
+    --sidebar-accent: 0.93 0.014 90;
+    --sidebar-accent-foreground: 0.235 0.028 40;
+    --sidebar-border: 0.825 0.032 75;
+    --sidebar-ring: 0.235 0.028 40;
+
+    /* --- Editorial rhythm & motion tokens ----------------------------------
+       One shared grid: every section aligns to the same section rhythm,
+       page gutter, and body measure. Floors are safe at a 320px viewport.
+    ----------------------------------------------------------------------- */
+    --section-y: clamp(4.5rem, 12vw, 11rem); /* vertical section rhythm */
+    --section-y-tight: clamp(3rem, 8vw, 7rem);
+    --gutter: clamp(1.25rem, 5vw, 5rem); /* page side gutter (20px floor) */
+    --rule: 1px; /* hairline thickness */
+    --measure: 62ch; /* body measure */
+    --measure-tight: 46ch; /* lead / standfirst measure */
+    --stack: clamp(1rem, 2.5vw, 2rem); /* vertical micro-rhythm inside blocks */
+    --stack-tight: clamp(0.5rem, 1.5vw, 1rem);
+
+    --ease-editorial: cubic-bezier(0.22, 1, 0.36, 1); /* calm ease-out */
+    --ease-in-out-soft: cubic-bezier(0.4, 0, 0.2, 1);
+    --dur-fast: 160ms;
+    --dur-base: 320ms;
+    --dur-slow: 640ms;
+
+    --transition-smooth: all var(--dur-base) var(--ease-in-out-soft);
+  }
+
+  /* Dark sections use the same brand inks — inverted porcelain/walnut */
+  .dark {
+    --background: 0.235 0.028 40; /* Dark Walnut */
+    --foreground: 0.965 0.012 92; /* Warm Porcelain */
+    --card: 0.28 0.03 42;
+    --card-foreground: 0.965 0.012 92;
+    --popover: 0.28 0.03 42;
+    --popover-foreground: 0.965 0.012 92;
+
+    --primary: 0.965 0.012 92;
+    --primary-foreground: 0.235 0.028 40;
+
+    --secondary: 0.825 0.032 75;
+    --secondary-foreground: 0.235 0.028 40;
+
+    --muted: 0.3 0.03 42;
+    --muted-foreground: 0.825 0.032 75; /* Sandstone metadata on Walnut */
+
+    --accent: 0.135 0.018 40;
+    --accent-foreground: 0.965 0.012 92;
+
+    --destructive: 0.55 0.16 28;
+    --destructive-foreground: 0.965 0.012 92;
+
+    --border: 0.36 0.03 45;
+    --input: 0.36 0.03 45;
+    --ring: 0.825 0.032 75;
+
+    --sidebar: 0.235 0.028 40;
+    --sidebar-foreground: 0.965 0.012 92;
+    --sidebar-primary: 0.965 0.012 92;
+    --sidebar-primary-foreground: 0.235 0.028 40;
+    --sidebar-accent: 0.3 0.03 42;
+    --sidebar-accent-foreground: 0.965 0.012 92;
+    --sidebar-border: 0.36 0.03 45;
+    --sidebar-ring: 0.825 0.032 75;
+  }
+
+  * {
+    @apply border-border;
+  }
+
+  html {
+    -webkit-text-size-adjust: 100%;
+    scroll-behavior: smooth;
+  }
+
+  body {
+    @apply bg-background text-foreground font-body antialiased;
+    font-feature-settings: "kern" 1, "liga" 1;
+    text-rendering: optimizeLegibility;
+  }
+
+  /* Editorial display defaults: monumental serif, tight optical tracking */
+  h1,
+  h2,
+  h3 {
+    @apply font-display;
+    font-optical-sizing: auto;
+    letter-spacing: -0.015em;
+  }
+
+  ::selection {
+    background: oklch(var(--primary));
+    color: oklch(var(--primary-foreground));
+  }
+}
+
+@layer utilities {
+  .transition-smooth {
+    transition: all var(--dur-base) var(--ease-in-out-soft);
+  }
+
+  /* Editorial display scale — monumental hero down to section headings.
+     Hero floor is 2.75rem (44px): a 6-glyph Fraunces word at that size is
+     ~160px wide, comfortably inside a 320px viewport minus the 40px gutter.
+     overflow-wrap + hyphens guarantee no horizontal overflow on any word. */
+  .text-hero {
+    font-family: var(--font-display);
+    font-weight: 300;
+    font-size: clamp(2.75rem, 13vw, 12.5rem);
+    line-height: 0.9;
+    letter-spacing: -0.03em;
+    overflow-wrap: break-word;
+    hyphens: auto;
+  }
+
+  .text-display {
+    font-family: var(--font-display);
+    font-weight: 300;
+    font-size: clamp(2.25rem, 6vw, 5.5rem);
+    line-height: 0.98;
+    letter-spacing: -0.02em;
+  }
+
+  .text-section {
+    font-family: var(--font-display);
+    font-weight: 400;
+    font-size: clamp(1.75rem, 3.5vw, 3.25rem);
+    line-height: 1.05;
+    letter-spacing: -0.015em;
+  }
+
+  /* Small uppercase metadata / eyebrow labels */
+  .text-eyebrow {
+    font-family: var(--font-body);
+    font-size: 0.6875rem;
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 0.24em;
+  }
+
+  /* Monospaced index numerals for project numbering */
+  .text-index {
+    font-family: var(--font-mono);
+    font-size: 0.75rem;
+    font-weight: 400;
+    letter-spacing: 0.08em;
+    font-variant-numeric: tabular-nums;
+  }
+
+  /* Hairline Sandstone rule */
+  .rule-hairline {
+    border-color: oklch(var(--border));
+    border-top-width: var(--rule);
+  }
+
+  /* Vertical section rhythm */
+  .section-y {
+    padding-top: var(--section-y);
+    padding-bottom: var(--section-y);
+  }
+  .section-y-tight {
+    padding-top: var(--section-y-tight);
+    padding-bottom: var(--section-y-tight);
+  }
+
+  .page-gutter {
+    padding-left: var(--gutter);
+    padding-right: var(--gutter);
+  }
+
+  .measure {
+    max-width: var(--measure);
+  }
+
+  .measure-tight {
+    max-width: var(--measure-tight);
+  }
+
+  /* Shared vertical micro-rhythm inside type blocks */
+  .stack {
+    display: flex;
+    flex-direction: column;
+    gap: var(--stack);
+  }
+  .stack-tight {
+    display: flex;
+    flex-direction: column;
+    gap: var(--stack-tight);
+  }
+
+  /* Restrained motion: only transform/opacity transition, no fade-in loops */
+  .motion-hover {
+    transition: transform var(--dur-base) var(--ease-editorial), opacity
+      var(--dur-base) var(--ease-editorial), color var(--dur-base)
+      var(--ease-editorial);
+  }
+
+  /* Selected Work imagery — monochrome by default, full colour on desktop
+     hover (or keyboard focus) and when a card is the active one in view on
+     touch layouts. This is a CSS filter only: the uploaded files are never
+     recoloured, regenerated or replaced, so their original colours survive
+     intact the moment the filter lifts. */
+  .work-image {
+    filter: grayscale(1);
+    transition: filter var(--dur-slow) var(--ease-editorial), transform
+      var(--dur-base) var(--ease-editorial);
+  }
+  .work-image[data-active="true"],
+  .group:hover .work-image,
+  .group:focus-within .work-image {
+    filter: grayscale(0);
+  }
+}
+
+/* ---------------------------------------------------------------------------
+   Reduced motion: everything degrades to static / near-static
+--------------------------------------------------------------------------- */
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+    transition-delay: 0ms !important;
+    scroll-behavior: auto !important;
+  }
+  .motion-hover {
+    transition: none;
+  }
+  .motion-hover:hover {
+    transform: none !important;
+  }
+}
